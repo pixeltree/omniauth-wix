@@ -13,6 +13,14 @@ module OmniAuth
       option :provider_ignores_state, true
 
       uid { request.params["instanceId"] }
+
+      credentials do
+        hash = {"token" => access_token.token}
+        hash["refresh_token"] = access_token.refresh_token if access_token.refresh_token
+        hash["expires_at"] = access_token.expires_at if access_token.expires?
+        hash["expires"] = access_token.expires?
+        hash
+      end
       
       def client
         ::OAuth2::Client.new(options.client_id, options.client_secret, deep_symbolize(options.client_options)) do |b|
