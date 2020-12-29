@@ -12,7 +12,7 @@ module OmniAuth
 
       option :provider_ignores_state, true
 
-      uid { request.params["state"] }
+      uid { request.params["instanceId"] }
       
       def client
         ::OAuth2::Client.new(options.client_id, options.client_secret, deep_symbolize(options.client_options)) do |b|
